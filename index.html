@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monad生态管理系统</title>
+    <title>Monad 生态管理系统</title>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -12,31 +12,36 @@
             --success-color: #10b981;
             --danger-color: #ef4444;
             --background: #f8fafc;
-            --sidebar-bg: #1e293b;
-            --text-dark: #0f172a;
-            --text-light: #ffffff;
+            --sidebar-bg: #111827;
+            --text-dark: #1f2937;
+            --text-light: #f9fafb;
+            --border-color: #e5e7eb;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         body {
-            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             background: var(--background);
             display: flex;
             min-height: 100vh;
+            line-height: 1.5;
+            color: var(--text-dark);
         }
 
+        /* 优化侧边栏 */
         .sidebar {
-            width: 240px;
+            width: 260px;
             background: var(--sidebar-bg);
             padding: 1.5rem;
             position: fixed;
             height: 100vh;
             z-index: 100;
+            border-right: 1px solid rgba(255,255,255,0.1);
         }
 
         .logo {
@@ -46,7 +51,16 @@
             margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .logo svg {
+            width: 28px;
+            height: 28px;
+            stroke-width: 1.5;
         }
 
         .nav-menu {
@@ -57,101 +71,90 @@
         }
 
         .nav-item {
-            padding: 0.75rem 1rem;
+            padding: 0.875rem 1.25rem;
             border-radius: 8px;
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .nav-item.active,
-        .nav-item:hover {
-            background: rgba(255,255,255,0.1);
-            color: var(--text-light);
-        }
-
-        .main-content {
-            flex: 1;
-            margin-left: 240px;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        .card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            margin-bottom: 1.5rem;
-        }
-
-        .card-header {
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-        }
-
-        #projectSection .stats-card {
-            background: linear-gradient(135deg, #f0f4ff, #f8fafc);
-        }
-
-        .project-item {
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             align-items: center;
             gap: 1rem;
-            transition: all 0.3s;
-        }
-
-        .project-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-        }
-
-        #walletSection .control-panel {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .address-table {
+            font-size: 0.95rem;
+            background: transparent;
+            border: none;
             width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 1.5rem;
         }
 
-        .address-table th {
-            background: var(--background);
-            padding: 1rem;
-            text-align: left;
-            font-weight: 500;
+        .nav-item:hover,
+        .nav-item.active {
+            background: rgba(255,255,255,0.08);
+            color: var(--text-light);
+            transform: translateX(4px);
+        }
+
+        /* 主内容区优化 */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 2.5rem;
+            min-height: 100vh;
+        }
+
+        /* 卡片设计 */
+        .card {
+            background: white;
+            border-radius: 14px;
+            padding: 2rem;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .card-header {
+            margin-bottom: 1.75rem;
+            padding-bottom: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-header h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
             color: var(--text-dark);
-            border-bottom: 2px solid #e2e8f0;
         }
 
-        .address-table td {
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
+        /* 输入框优化 */
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            transition: all 0.2s;
             background: white;
         }
 
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+        }
+
+        .input-field::placeholder {
+            color: #9ca3af;
+        }
+
+        /* 按钮优化 */
         .btn {
-            padding: 0.75rem 1.5rem;
-            border: none;
+            padding: 0.875rem 1.75rem;
             border-radius: 8px;
             font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
+            font-size: 0.95rem;
+            border: 1px solid transparent;
         }
 
         .btn-primary {
@@ -161,6 +164,8 @@
 
         .btn-primary:hover {
             background: var(--secondary-color);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
         }
 
         .btn-danger {
@@ -168,8 +173,105 @@
             color: white;
         }
 
+        .btn-danger:hover {
+            background: #dc2626;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        /* 项目列表项 */
+        .project-item {
+            padding: 1.25rem;
+            margin: 0.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 1.25rem;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .project-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .project-checkbox {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary-color);
+            cursor: pointer;
+        }
+
+        /* 统计数字样式 */
+        .stat-number {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+        }
+
+        /* 表格优化 */
+        .address-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        }
+
+        .address-table th,
+        .address-table td {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            background: white;
+        }
+
+        .address-table th {
+            background: #f9fafb;
+            color: #374151;
+            font-weight: 500;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .address-table tr:not(:last-child) td {
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .address-table tr:hover td {
+            background: #f9fafb;
+        }
+
+        /* 加载动画 */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .loading-status {
+            animation: pulse 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+            color: #9ca3af;
+        }
+
+        /* 过渡动画 */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -181,130 +283,155 @@
 <body>
     <nav class="sidebar">
         <div class="logo">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                 <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
-            Monad
+            Monad Console
         </div>
         <ul class="nav-menu">
-            <li class="nav-item active" onclick="showSection('projectSection')">📦 交互项目</li>
-            <li class="nav-item" onclick="showSection('walletSection')">💰 钱包查询</li>
+            <li class="nav-item active" onclick="showSection('projectSection')">📦 交互项目管理</li>
+            <li class="nav-item" onclick="showSection('walletSection')">💰 钱包状态分析</li>
         </ul>
     </nav>
 
     <main class="main-content">
+        <!-- 交互项目管理模块 -->
         <section id="projectSection" class="content-section">
             <div class="card">
                 <div class="card-header">
                     <h2>项目交互管理</h2>
                 </div>
-                <div class="stats-card">
-                    <div style="margin-bottom: 1.5rem;">
-                        <div style="display: flex; gap: 2rem; margin-bottom: 1.5rem;">
-                            <div>
-                                <div style="font-size: 0.875rem; color: #64748b;">已打开</div>
-                                <div id="openedCount" style="font-size: 1.5rem; font-weight: 600;">0</div>
-                            </div>
-                            <div>
-                                <div style="font-size: 0.875rem; color: #64748b;">未打开</div>
-                                <div id="unopenedCount" style="font-size: 1.5rem; font-weight: 600;">0</div>
-                            </div>
+                
+                <div style="display: grid; gap: 2rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                        <div>
+                            <div class="stat-label">已完成项目</div>
+                            <div id="openedCount" class="stat-number">0</div>
                         </div>
-
-                        <textarea 
-                            class="batch-input" 
-                            id="batchInput" 
-                            placeholder="批量导入项目网址（每行一个）\n示例：\nhttps://www.kuru.io/swap\nhttps://monad.curvance.com/monad"
-                            style="width: 100%; height: 120px; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px;"
-                        ></textarea>
-
-                        <div style="display: flex; gap: 1rem; margin-top: 1.5rem;">
-                            <button class="btn btn-primary" onclick="batchAddProjects()">批量导入</button>
-                            <button class="btn btn-primary" onclick="openRandomProject()">随机打开</button>
-                            <button class="btn btn-danger" onclick="clearProgress()">重置进度</button>
-                        </div>
-
-                        <div style="margin-top: 1.5rem; display: flex; align-items: center; gap: 1rem;">
-                            <label style="display: flex; align-items: center; gap: 0.5rem;">
-                                <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this.checked)" 
-                                    style="width: 16px; height: 16px;">
-                                全选
-                            </label>
-                            <button class="btn btn-danger" onclick="batchDelete()">批量删除</button>
+                        <div>
+                            <div class="stat-label">未完成项目</div>
+                            <div id="unopenedCount" class="stat-number">0</div>
                         </div>
                     </div>
 
-                    <div class="project-list">
-                        <h3 style="margin-bottom: 1rem;">项目列表</h3>
-                        <div id="projectList" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+                    <textarea 
+                        class="input-field"
+                        id="batchInput" 
+                        placeholder="批量导入项目网址（每行一个）&#10;示例：&#10;https://www.kuru.io/swap&#10;https://monad.curvance.com/monad"
+                        style="height: 120px; resize: vertical;"
+                    ></textarea>
+
+                    <div class="btn-group">
+                        <button class="btn btn-primary" onclick="batchAddProjects()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                                <path d="M12 5v14M5 12h14"/>
+                            </svg>
+                            批量导入
+                        </button>
+                        <button class="btn btn-primary" onclick="openRandomProject()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                                <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
+                                <path d="M21 3v5h-5"/>
+                            </svg>
+                            随机打开
+                        </button>
+                        <button class="btn btn-danger" onclick="clearProgress()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                                <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                            重置进度
+                        </button>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 1.5rem; margin-top: 1rem;">
+                        <label style="display: flex; align-items: center; gap: 0.75rem; cursor: pointer;">
+                            <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this.checked)" class="project-checkbox">
+                            <span style="color: #4b5563;">全选项目</span>
+                        </label>
+                        <button class="btn btn-danger" onclick="batchDelete()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                                <path d="M3 6h18M10 11v6M14 11v6M4 6h16M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
+                            </svg>
+                            批量删除
+                        </button>
+                    </div>
+
+                    <div>
+                        <h3 style="margin-bottom: 1.25rem; color: var(--text-dark); font-size: 1.125rem;">项目列表</h3>
+                        <div id="projectList" style="display: grid; gap: 0.75rem;"></div>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- 钱包分析模块 -->
         <section id="walletSection" class="content-section" style="display: none;">
             <div class="card">
                 <div class="card-header">
-                    <h2>钱包状态查询</h2>
+                    <h2>钱包状态分析</h2>
                 </div>
-                <div class="control-panel">
-                    <div class="input-group">
-                        <input type="text" id="apiKey" placeholder="API 密钥" 
-                            style="width: 100%; padding: 0.75rem; border: 1px solid #e2e8f0; border-radius: 8px;">
-                    </div>
-                    <div class="input-group">
-                        <select id="threads" style="width: 100%; padding: 0.75rem;">
+                
+                <div style="display: grid; gap: 1.5rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem;">
+                        <input type="text" id="apiKey" class="input-field" placeholder="输入API密钥">
+                        <select id="threads" class="input-field">
                             <option value="1">1线程</option>
                             <option value="2">2线程</option>
                             <option value="3" selected>3线程</option>
                             <option value="4">4线程</option>
                         </select>
+                        <input type="number" id="interval" class="input-field" value="1000" min="500" placeholder="请求间隔（毫秒）">
                     </div>
-                    <div class="input-group">
-                        <input type="number" id="interval" value="1000" min="500" 
-                            style="width: 100%; padding: 0.75rem;">
+
+                    <textarea 
+                        id="addresses" 
+                        class="input-field"
+                        placeholder="输入钱包地址（每行一个）&#10;示例：&#10;0x742d35Cc6634C0532925a3b844Bc454e4438f44e&#10;0xde0b295669a9fd93d5f28d9ec85e40f4cb697bae"
+                        style="height: 120px; resize: vertical;"
+                    ></textarea>
+
+                    <button class="btn btn-primary" onclick="startAnalysis()" style="width: 100%; padding: 1rem;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        开始分析
+                    </button>
+
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                        <div>
+                            <div class="stat-label">总 MON 余额</div>
+                            <div id="totalMON" class="stat-number">0.0000</div>
+                        </div>
+                        <div>
+                            <div class="stat-label">总质押aprMON</div>
+                            <div id="totalAprMON" class="stat-number">0.0000</div>
+                        </div>
+                    </div>
+
+                    <div style="overflow-x: auto;">
+                        <table class="address-table">
+                            <thead>
+                                <tr>
+                                    <th>钱包地址</th>
+                                    <th>MON余额</th>
+                                    <th>aprMON余额</th>
+                                    <th>交易数</th>
+                                    <th>活动数</th>
+                                    <th>内部交易</th>
+                                    <th>交互合约</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultBody"></tbody>
+                        </table>
                     </div>
                 </div>
-
-                <textarea 
-                    id="addresses" 
-                    placeholder="输入钱包地址（每行一个）"
-                    style="width: 100%; height: 120px; margin: 1.5rem 0; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px;"
-                ></textarea>
-
-                <button class="btn btn-primary" onclick="startAnalysis()" style="width: 100%;">开始查询</button>
-
-                <div style="margin: 2rem 0; display: flex; gap: 2rem;">
-                    <div>
-                        <div style="font-size: 0.875rem; color: #64748b;">总 MON</div>
-                        <div id="totalMON" style="font-size: 1.5rem; font-weight: 600;">0.0000</div>
-                    </div>
-                    <div>
-                        <div style="font-size: 0.875rem; color: #64748b;">总质押aprMON</div>
-                        <div id="totalAprMON" style="font-size: 1.5rem; font-weight: 600;">0.0000</div>
-                    </div>
-                </div>
-
-                <table class="address-table">
-                    <thead>
-                        <tr>
-                            <th>地址</th>
-                            <th>MON余额</th>
-                            <th>aprMON余额</th>
-                            <th>交易数</th>
-                            <th>活动数</th>
-                            <th>内部交易</th>
-                            <th>交互合约</th>
-                        </tr>
-                    </thead>
-                    <tbody id="resultBody"></tbody>
-                </table>
             </div>
         </section>
     </main>
 
     <script>
-        // 交互项目管理逻辑
+        // 交互项目管理逻辑（保持原有功能不变）
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         let openedProjects = JSON.parse(localStorage.getItem('openedProjects')) || [];
         let selectedProjects = new Set();
@@ -422,19 +549,19 @@
                         onchange="handleProjectSelect(this)"
                         ${selectedProjects.has(project.url) ? 'checked' : ''}
                     >
-                    <div style="margin-left: 30px;">
-                        <span class="status-dot" style="background:${openedProjects.includes(project.url) ? '#ccc' : 'var(--primary-color)'}"></span>
-                        ${project.name}
+                    <div style="flex: 1; display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 10px; height: 10px; border-radius: 50%; background: ${openedProjects.includes(project.url) ? '#d1d5db' : 'var(--primary-color)'};"></div>
+                        <div>${project.name}</div>
                     </div>
-                    ${!openedProjects.includes(project.url) ? 
-                        '<span class="unopened-badge">未完成</span>' : 
-                        '<span style="color: #666">已完成</span>'}
+                    <div style="color: ${openedProjects.includes(project.url) ? '#6b7280' : 'var(--primary-color)'}; font-size: 0.9rem;">
+                        ${openedProjects.includes(project.url) ? '已完成' : '未完成'}
+                    </div>
                 </div>
             `).join('');
             updateSelectAllState();
         }
 
-        // 钱包查询逻辑
+        // 钱包分析逻辑（保持原有功能不变）
         const API_CONFIG = {
             tokens: 'https://api.blockvision.org/v2/monad/account/tokens',
             transactions: 'https://api.blockvision.org/v2/monad/account/transactions',
@@ -489,12 +616,12 @@
                 const row = document.getElementById('resultBody').insertRow(index);
                 row.innerHTML = `
                     <td class="address-short">${this.shortenAddress(address)}</td>
-                    <td class="numeric loading-status">...</td>
-                    <td class="numeric loading-status">...</td>
-                    <td class="numeric loading-status">...</td>
-                    <td class="numeric loading-status">...</td>
-                    <td class="numeric loading-status">...</td>
-                    <td class="numeric loading-status">...</td>
+                    <td class="loading-status">...</td>
+                    <td class="loading-status">...</td>
+                    <td class="loading-status">...</td>
+                    <td class="loading-status">...</td>
+                    <td class="loading-status">...</td>
+                    <td class="loading-status">...</td>
                 `;
                 return row;
             }
@@ -511,7 +638,7 @@
             }
 
             showErrorRow(row) {
-                row.innerHTML = '<td colspan="7" style="color: #ff4444">请求失败</td>';
+                row.innerHTML = '<td colspan="7" style="color: #ef4444; padding: 1.5rem; text-align: center;">请求失败，请重试</td>';
             }
 
             createErrorResult(address) {
@@ -647,7 +774,7 @@
             }
         }
 
-        // 侧边栏切换
+        // 侧边栏切换功能
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
                 section.style.display = 'none';
