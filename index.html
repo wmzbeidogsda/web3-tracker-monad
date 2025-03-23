@@ -33,7 +33,6 @@
             color: var(--text-dark);
         }
 
-        /* 优化侧边栏 */
         .sidebar {
             width: 260px;
             background: var(--sidebar-bg);
@@ -92,7 +91,6 @@
             transform: translateX(4px);
         }
 
-        /* 主内容区优化 */
         .main-content {
             flex: 1;
             margin-left: 260px;
@@ -100,7 +98,6 @@
             min-height: 100vh;
         }
 
-        /* 卡片设计 */
         .card {
             background: white;
             border-radius: 14px;
@@ -122,7 +119,6 @@
             color: var(--text-dark);
         }
 
-        /* 输入框优化 */
         .input-field {
             width: 100%;
             padding: 0.875rem 1.25rem;
@@ -143,7 +139,6 @@
             color: #9ca3af;
         }
 
-        /* 按钮优化 */
         .btn {
             padding: 0.875rem 1.75rem;
             border-radius: 8px;
@@ -155,6 +150,7 @@
             gap: 0.75rem;
             font-size: 0.95rem;
             border: 1px solid transparent;
+            flex: 1;
         }
 
         .btn-primary {
@@ -185,7 +181,6 @@
             flex-wrap: wrap;
         }
 
-        /* 项目列表项 */
         .project-item {
             padding: 1.25rem;
             margin: 0.5rem 0;
@@ -210,7 +205,6 @@
             cursor: pointer;
         }
 
-        /* 统计数字样式 */
         .stat-number {
             font-size: 1.75rem;
             font-weight: 600;
@@ -224,7 +218,6 @@
             margin-bottom: 0.25rem;
         }
 
-        /* 表格优化 */
         .address-table {
             width: 100%;
             border-collapse: separate;
@@ -258,7 +251,6 @@
             background: #f9fafb;
         }
 
-        /* 加载动画 */
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: 0.5; }
@@ -269,7 +261,6 @@
             color: #9ca3af;
         }
 
-        /* 过渡动画 */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(12px); }
             to { opacity: 1; transform: translateY(0); }
@@ -277,6 +268,32 @@
 
         .content-section {
             animation: fadeIn 0.3s ease-out;
+        }
+
+        /* 新增优化样式 */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .wallet-stats {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .start-analysis-btn {
+            width: auto;
+            padding: 0.875rem 2rem;
         }
     </style>
 </head>
@@ -321,22 +338,22 @@
                         style="height: 120px; resize: vertical;"
                     ></textarea>
 
-                    <div class="btn-group">
+                    <div class="action-buttons">
                         <button class="btn btn-primary" onclick="batchAddProjects()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M12 5v14M5 12h14"/>
                             </svg>
                             批量导入
                         </button>
                         <button class="btn btn-primary" onclick="openRandomProject()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/>
                                 <path d="M21 3v5h-5"/>
                             </svg>
                             随机打开
                         </button>
                         <button class="btn btn-danger" onclick="clearProgress()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
                             </svg>
                             重置进度
@@ -349,7 +366,7 @@
                             <span style="color: #4b5563;">全选项目</span>
                         </label>
                         <button class="btn btn-danger" onclick="batchDelete()">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 8px;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                 <path d="M3 6h18M10 11v6M14 11v6M4 6h16M6 6V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v2"/>
                             </svg>
                             批量删除
@@ -368,7 +385,16 @@
         <section id="walletSection" class="content-section" style="display: none;">
             <div class="card">
                 <div class="card-header">
-                    <h2>钱包状态分析</h2>
+                    <div class="wallet-header">
+                        <h2>钱包状态分析</h2>
+                        <button class="btn btn-primary start-analysis-btn" onclick="startAnalysis()">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                <polyline points="22 4 12 14.01 9 11.01"/>
+                            </svg>
+                            开始分析
+                        </button>
+                    </div>
                 </div>
                 
                 <div style="display: grid; gap: 1.5rem;">
@@ -378,7 +404,6 @@
                             <option value="1">1线程</option>
                             <option value="2">2线程</option>
                             <option value="3" selected>3线程</option>
-                            <option value="4">4线程</option>
                         </select>
                         <input type="number" id="interval" class="input-field" value="1000" min="500" placeholder="请求间隔（毫秒）">
                     </div>
@@ -390,15 +415,7 @@
                         style="height: 120px; resize: vertical;"
                     ></textarea>
 
-                    <button class="btn btn-primary" onclick="startAnalysis()" style="width: 100%; padding: 1rem;">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 10px;">
-                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                            <polyline points="22 4 12 14.01 9 11.01"/>
-                        </svg>
-                        开始分析
-                    </button>
-
-                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin: 2rem 0;">
+                    <div class="wallet-stats">
                         <div>
                             <div class="stat-label">总 MON 余额</div>
                             <div id="totalMON" class="stat-number">0.0000</div>
@@ -431,7 +448,15 @@
     </main>
 
     <script>
-        // 交互项目管理逻辑（保持原有功能不变）
+        // 修复问题1：全选逻辑优化
+        function updateSelectAllState() {
+            const allChecked = projects.length > 0 && 
+                selectedProjects.size === projects.length && 
+                projects.every(p => selectedProjects.has(p.url));
+            document.getElementById('selectAll').checked = allChecked;
+        }
+
+        // 交互项目管理逻辑（其他保持不变）
         let projects = JSON.parse(localStorage.getItem('projects')) || [];
         let openedProjects = JSON.parse(localStorage.getItem('openedProjects')) || [];
         let selectedProjects = new Set();
@@ -465,11 +490,6 @@
             const url = checkbox.dataset.url;
             checkbox.checked ? selectedProjects.add(url) : selectedProjects.delete(url);
             updateSelectAllState();
-        }
-
-        function updateSelectAllState() {
-            const allChecked = projects.length > 0 && selectedProjects.size === projects.length;
-            document.getElementById('selectAll').checked = allChecked;
         }
 
         function batchDelete() {
@@ -561,7 +581,7 @@
             updateSelectAllState();
         }
 
-        // 钱包分析逻辑（保持原有功能不变）
+        // 钱包分析逻辑（保持不变）
         const API_CONFIG = {
             tokens: 'https://api.blockvision.org/v2/monad/account/tokens',
             transactions: 'https://api.blockvision.org/v2/monad/account/transactions',
@@ -774,7 +794,6 @@
             }
         }
 
-        // 侧边栏切换功能
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(section => {
                 section.style.display = 'none';
@@ -786,7 +805,6 @@
             event.target.closest('.nav-item').classList.add('active');
         }
 
-        // 初始化
         if (localStorage.getItem('legacyProjects')) {
             // 旧数据迁移代码（保持原样）
         }
