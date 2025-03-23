@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monad管理系统</title>
+    <title>Monad生态管理系统</title>
     <style>
         :root {
             --primary-color: #6366f1;
@@ -214,7 +214,7 @@
                         <textarea 
                             class="batch-input" 
                             id="batchInput" 
-                            placeholder="批量导入项目网址(每行一个)
+                            placeholder="批量导入项目网址（每行一个）\n示例：\nhttps://www.kuru.io/swap\nhttps://monad.curvance.com/monad"
                             style="width: 100%; height: 120px; padding: 1rem; border: 1px solid #e2e8f0; border-radius: 8px;"
                         ></textarea>
 
@@ -291,10 +291,10 @@
                             <th>地址</th>
                             <th>MON余额</th>
                             <th>aprMON余额</th>
-                            <th>Transaction</th>
-                            <th>Activity</th>
-                            <th>Internal Transaction</th>
-                            <th>交互合约数量</th>
+                            <th>交易数</th>
+                            <th>活动数</th>
+                            <th>内部交易</th>
+                            <th>交互合约</th>
                         </tr>
                     </thead>
                     <tbody id="resultBody"></tbody>
